@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Loan Records</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .pre-scrollable{
+            height:500px;
+            overflow-y: scroll;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>Final Exam Set B</h1>
+<h5 th:text="${err}" style="color: red;font-weight: bold;text-align: center;"></h5>
+<h3>Sales Summary Table</h3>
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Salesman Name</th>
+            <th>Washing Machine</th>
+            <th>Refrigerator</th>
+            <th>Music System</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p:${list}">
+            <td th:text="${p.getName()}"></td>
+            <td th:text="${p.getAmount()}"></td>
+            <td></td>
+            <td></td>
+            <td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<form method="post" th:action="@{save}">
+    <div style="background-color: aqua">
+        <label><b>Salesman Name:</b></label>
+        <input class="form-control" type="text" name="name"
+               th:value="${salesman.name}">
+
+
+        <label><b>Item Type:</b></label>
+        <select class="form-select" name="item" aria-label="Default select example" id="dropDown" >
+            <option value="Washing Machine">Washing Machine</option>
+            <option value="Refrigerator">Refrigerator</option>
+            <option value="Music System">Music System</option>
+        </select>
+
+
+        <label><b> Amount</b></label>
+        <input class="form-control" type="text" name="amount"
+               th:value="${salesman.amount}">
+
+            <label>Date of Transaction</label>
+            <input class="form-control" type="date" name="dot"
+                   th:value="${salesman.dot}">
+            <span th:errors="${salesman.dot}"></span>
+
+<div class="vertical-center">
+    <button type="submit" class="btn-primary"  th:href="@{/index}" >Save </button>
+</div>
+    </div>
+</form>
+<div class="container mt-2 pre-scrollable">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Transaction Code</th>
+                <th>Salesman</th>
+                <th>Item</th>
+                <th>Amount</th>
+                <th>Transaction Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p:${list}">
+                <td th:text="${p.getId()}"></td>
+                <td th:text="${p.getName()}"></td>
+                <td th:text="${p.getItem()}"></td>
+                <td th:text="${p.getAmount()}"></td>
+                <td th:text="${p.getDot()}"></td>
+                <td>
+                    <a class="btn btn-danger" onClick="return confirm('Are you sure you want to delete
+the record ?')" th:href="@{delete(id=${p.getClientno()})}">
+                        Delete</a>
+                </td>
+                <td>
+                    <a class="btn btn-success" th:href="@{editLoan(id=${p.getClientno()})}">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    </div>
+
+</div>
+</body>
+</html>
